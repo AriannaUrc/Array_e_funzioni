@@ -10,8 +10,9 @@ namespace Array_e_funzioni
     {
 
         //aggiunta di un elemento all'array in coda
-        static int[] aggiunta_in_coda(ref int lenght, int[]array, int elemento)
+        static bool aggiunta_in_coda(ref int lenght, ref int[]array, int elemento)
         {
+            bool max_lenght=false;
             if (lenght < array.Length-1)
             {
                 array[lenght] = elemento;
@@ -19,9 +20,9 @@ namespace Array_e_funzioni
             }
             else
             {
-                Console.WriteLine("l'array ha raggiuno la sua capacità massima");
+                max_lenght = true;
             }
-            return array;
+            return max_lenght;
         }
 
 
@@ -65,15 +66,20 @@ namespace Array_e_funzioni
         }
 
         //Inserimento di un valore in una posizione dell'array.
-        static int[] add(int[] array, int ele_agg, ref int lenght, int pos_agg)
+        static bool add(ref int[] array, int ele_agg, ref int lenght, int pos_agg)
         {
+            bool max = false;
             for (int i = lenght; i > pos_agg; i--)
             {
                 array[i+1] = array[i];
             }
+            else
+            {
+                max = true;
+            }
             array[pos_agg]=ele_agg;
             lenght++;
-            return array;
+            return max;
         }
 
         static void Main(string[] args)
@@ -81,37 +87,53 @@ namespace Array_e_funzioni
             int[] array = new int[100];
             int lenght = 0, ricerca, posizione, elemento, rem, ele_agg, pos_agg;
             string codice_html="";
+            bool confirm_max, confirm_position;
 
             //aggiunta di un elemento all'array in coda
+            Console.WriteLine("Inserire l'array iniziale: ");
             for (int i = 0; i < 4; i++)
             {
-                if (lenght < 99)
-                {
-                    elemento = int.Parse(Console.ReadLine());
-                    aggiunta_in_coda(ref lenght, array, elemento);
-                }
-                else
-                {
-                    Console.WriteLine("l'array ha raggiuno la sua capacità massima");
-                }
+                Console.WriteLine("Inserire elemento: ");
+                Console.WriteLine("Inserire l'elemento da aggiungere in coda: ");
+                elemento = int.Parse(Console.ReadLine());
+                aggiunta_in_coda(ref lenght, ref array, elemento);
             }
+
+
+
+            Console.WriteLine("Hai varie opzioni a tua disposizione:\n\n 1 - Stampa l'array\n 2 - Aggiungere un elemento in coda\n 3 - ottenere codice html dell'array\n 4 - trovare posizione di un elemento\n 5 - Cancellare elemento\n 6 - inserire elemento in posizione specifica");
+
+            //aggiunta di un elemento all'array in coda
+            Console.WriteLine("Inserire elemento: ");
+            Console.WriteLine("Inserire l'elemento da aggiungere in coda: ");
+            elemento = int.Parse(Console.ReadLine());
+            confirm_max=aggiunta_in_coda(ref lenght, ref array, elemento);
+            if (confirm_max)
+            {
+                Console.WriteLine("La grandezza massima dell'array e stata raggiunta");
+            }
+
 
             //scrittura codice html della stringa
             codice_html = fun_codice_html(array, lenght);
 
             //funzione per cercare un elemento dell'array, restituire o la posizione o se non possibile -1
+            Console.WriteLine("Inserire l'elemento da ricercare: ");
             ricerca = int.Parse(Console.ReadLine());
             posizione=fun_posizione(array, ricerca, lenght);
 
             //cancellazione di un elemento da un array
+            Console.WriteLine("Inserire la posizione dell'elemento da cancellare: ");
             rem = int.Parse(Console.ReadLine());
             array = remove(array, rem, ref lenght);
 
 
             //Inserimento di un valore in una posizione dell'array.
+            Console.WriteLine("Inserire la posizione desiderata: ");
             pos_agg = int.Parse(Console.ReadLine());
+            Console.WriteLine("Inserire il nuovo valore: ");
             ele_agg = int.Parse(Console.ReadLine());
-            array=add(array, ele_agg, ref lenght, pos_agg);
+            confirm_position = add(ref array, ele_agg, ref lenght, pos_agg);
         }
     }
 }
