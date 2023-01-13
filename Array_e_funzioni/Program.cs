@@ -23,21 +23,36 @@ namespace Array_e_funzioni
             return array;
         }
 
-        static string fun_codice_html(int[] array)
+        static string fun_codice_html(int[] array, int lenght)
         {
-            string codice_html= "<ul>";
-            for (int i = 0; i < array.Length; i++)
+            string codice_html = "<ul>";
+            for (int i = 0; i < lenght+1; i++)
             {
-                codice_html = codice_html + "<li>"+array[i]+ "</li>";
+                codice_html = codice_html + "<li>" + array[i] + "</li>";
             }
             codice_html = codice_html + "</ul>";
             return codice_html;
         }
 
+        //funzione per cercare un elemento dell'array, restituire o la posizione o se non possibile -1
+        static int fun_posizione(int[] array, int ricerca, int lenght)
+        {
+            int posizione = -1;
+
+            for (int i = 0; i < lenght+1; i++)
+            {
+               if (array[i] == ricerca)
+                {
+                    posizione=i;
+                }
+            }
+            return posizione;
+        }
+
         static void Main(string[] args)
         {
             int[] array = new int[100];
-            int lenght = 0;
+            int lenght = 0, ricerca, posizione;
             string codice_html="";
 
             for (int i = 0; i < 4; i++)
@@ -46,11 +61,14 @@ namespace Array_e_funzioni
                 lenght++;
             }
 
-            codice_html=fun_codice_html(array);
+
+            codice_html=fun_codice_html(array, lenght);
 
 
-            
-            //funzione per cercare un elemento dell'array, restituire o la posizione o se non possibile -1
+            ricerca=int.Parse(Console.ReadLine());
+            posizione=fun_posizione(array, ricerca, lenght);
+
+
             //cancellazione di un elemento da un array
             //Inserimento di un valore in una posizione dell'array.
         }
