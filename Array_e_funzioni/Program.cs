@@ -24,6 +24,8 @@ namespace Array_e_funzioni
             return array;
         }
 
+
+        //scrittura codice html della stringa
         static string fun_codice_html(int[] array, int lenght)
         {
             string codice_html = "<ul>";
@@ -62,12 +64,25 @@ namespace Array_e_funzioni
             return array;
         }
 
+        //Inserimento di un valore in una posizione dell'array.
+        static int[] add(int[] array, int ele_agg, ref int lenght, int pos_agg)
+        {
+            for (int i = lenght; i > pos_agg; i--)
+            {
+                array[i+1] = array[i];
+            }
+            array[pos_agg]=ele_agg;
+            lenght++;
+            return array;
+        }
+
         static void Main(string[] args)
         {
             int[] array = new int[100];
-            int lenght = 0, ricerca, posizione, elemento, rem;
+            int lenght = 0, ricerca, posizione, elemento, rem, ele_agg, pos_agg;
             string codice_html="";
 
+            //aggiunta di un elemento all'array in coda
             for (int i = 0; i < 4; i++)
             {
                 if (lenght < 99)
@@ -81,19 +96,22 @@ namespace Array_e_funzioni
                 }
             }
 
+            //scrittura codice html della stringa
+            codice_html = fun_codice_html(array, lenght);
 
-            codice_html=fun_codice_html(array, lenght);
-
-
-            ricerca=int.Parse(Console.ReadLine());
+            //funzione per cercare un elemento dell'array, restituire o la posizione o se non possibile -1
+            ricerca = int.Parse(Console.ReadLine());
             posizione=fun_posizione(array, ricerca, lenght);
 
-
+            //cancellazione di un elemento da un array
             rem = int.Parse(Console.ReadLine());
             array = remove(array, rem, ref lenght);
 
-            
+
             //Inserimento di un valore in una posizione dell'array.
+            pos_agg = int.Parse(Console.ReadLine());
+            ele_agg = int.Parse(Console.ReadLine());
+            array=add(array, ele_agg, ref lenght, pos_agg);
         }
     }
 }
