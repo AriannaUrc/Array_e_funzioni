@@ -10,11 +10,12 @@ namespace Array_e_funzioni
     {
 
         //aggiunta di un elemento all'array in coda
-        static int[] aggiunta_in_coda(int lenght, int[]array)
+        static int[] aggiunta_in_coda(ref int lenght, int[]array, int elemento)
         {
-            if (lenght < 99)
+            if (lenght < array.Length-1)
             {
-                array[lenght] = int.Parse(Console.ReadLine());
+                array[lenght] = elemento;
+                lenght++;
             }
             else
             {
@@ -49,16 +50,35 @@ namespace Array_e_funzioni
             return posizione;
         }
 
+        //cancellazione di un elemento da un array
+        static int[] remove(int[] array, int rem, ref int lenght)
+        {
+
+            for (int i = rem-1; i <= lenght; i++)
+            {
+                array[i] = array[i+1];
+            }
+            lenght--;
+            return array;
+        }
+
         static void Main(string[] args)
         {
             int[] array = new int[100];
-            int lenght = 0, ricerca, posizione;
+            int lenght = 0, ricerca, posizione, elemento, rem;
             string codice_html="";
 
             for (int i = 0; i < 4; i++)
             {
-                aggiunta_in_coda(lenght, array);
-                lenght++;
+                if (lenght < 99)
+                {
+                    elemento = int.Parse(Console.ReadLine());
+                    aggiunta_in_coda(ref lenght, array, elemento);
+                }
+                else
+                {
+                    Console.WriteLine("l'array ha raggiuno la sua capacità massima");
+                }
             }
 
 
@@ -69,7 +89,10 @@ namespace Array_e_funzioni
             posizione=fun_posizione(array, ricerca, lenght);
 
 
-            //cancellazione di un elemento da un array
+            rem = int.Parse(Console.ReadLine());
+            array = remove(array, rem, ref lenght);
+
+            
             //Inserimento di un valore in una posizione dell'array.
         }
     }
